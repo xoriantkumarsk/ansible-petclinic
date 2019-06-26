@@ -1,0 +1,10 @@
+- hosts: localhost
+  gather_facts: yes
+  roles:
+    - build
+
+- hosts: webservers
+  gather_facts: yes
+  become: yes
+  roles:
+    - deploy

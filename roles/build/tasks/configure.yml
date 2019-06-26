@@ -1,0 +1,8 @@
+- name: Copy Environment related config files
+  template:
+    src: "{{ item }}"
+    dest: "{{ build.path }}/src/main/resources/"
+    force: yes
+    backup: yes
+  with_items:
+    - application-mysql.properties

@@ -1,0 +1,4 @@
+- name: Build application
+  command: mvn -f pom.xml clean package
+  args:
+    chdir: "{{ build.path }}"
