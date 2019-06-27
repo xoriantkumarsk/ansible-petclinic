@@ -1,7 +1,8 @@
+---
 - name: Copy Environment related config files
   template:
     src: "{{ item }}"
-    dest: "{{ build.path }}/src/main/resources/"
+    dest: "{{ BUILD_PATH }}/src/main/resources/"
     force: yes
     backup: yes
   with_items:

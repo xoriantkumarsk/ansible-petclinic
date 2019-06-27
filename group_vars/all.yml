@@ -1,24 +1,6 @@
-petclinic:
-  app_name: petclinic
-  app_version: "4.0"
-  git_repo: https://github.com/madhusudhanan-ms/spring-petclinic.git
-  release_version: "{{ lookup('env','RELEASE_VERSION') | default('master', true) }}"
-
-build:
-  path: /tmp/spring-petclinic
-  java_path: /Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home
-
-provision:
-  user: devops
-  group: devops
-  public_ip: "{{ lookup('env','SERVER_IP') }}"
-  ssh_port: 22
-  python_path: /usr/bin/python3
-
-deploy:
-  build_path: /tmp/petclinic
-  path: "/srv/petclinic"
-  tomcat_path: /var/lib/tomcat7/webapps
-  custom_config_path: /usr/share/tomcat7/lib/petclinic-config.groovy
-  public_ip: "{{ lookup('env','SERVER_IP') }}"
-  http_port: 80
+APP_NAME: petclinic
+GIT_REPO: https://github.com/madhusudhanan-ms/spring-petclinic.git
+BUILD_PATH: /tmp/spring-petclinic
+MYSQL_SERVER: 172.31.43.60 
+MYSQL_USER: root
+MYSQL_PASSWORD: root

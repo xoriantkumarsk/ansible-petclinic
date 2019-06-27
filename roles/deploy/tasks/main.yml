@@ -10,8 +10,8 @@
   become: true
   copy:
     remote_src: true
-    src: "{{ build.path }}/target/spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar"
+    src: "{{ BUILD_PATH }}/target/spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar"
     dest: /var/petclinic/
 
 - name: start petclinic 
-  shell: cd /var/petclinic/; nohup sudo java -jar spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar --spring.profiles.active=mysql >> logs/petclinic.log 2>&1 &
+  shell: cd /var/petclinic/; nohup sudo java -jar spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar  2>&1 &

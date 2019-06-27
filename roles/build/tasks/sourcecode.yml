@@ -1,13 +1,13 @@
 ---
 - name: Ensure Deploy Path exists
   file:
-    path: "{{ build.path }}"
+    path: "{{ BUILD_PATH }}"
     state: absent
     force: yes
 
 - name: Download PetClinic Repository
   git:
-    repo: "{{ petclinic.git_repo }}"
-    dest: "{{ build.path }}"
+    repo: "{{ GIT_REPO }}"
+    dest: "{{ BUILD_PATH }}"
 #    version: "{{ petclinic.release_version }}"
     update: yes
