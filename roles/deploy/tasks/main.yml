@@ -1,16 +1,37 @@
+- name: Get running processes
+  shell: "ps -ef | grep -v grep | grep -w {{ APP_NAME }} | awk '{print $2}'"
+  register: running_processes
+
+- name: Kill running processes
+  shell: "kill {{ item }}"
+  with_items: "{{ running_processes.stdout_lines }}"
+
+- wait_for:
+    path: "/proc/{{ item }}/status"
+    state: absent
+  with_items: "{{ running_processes.stdout_lines }}"
+  ignore_errors: yes
+  register: killed_processes
+
+- name: Force kill stuck processes
+  shell: "kill -9 {{ item }}"
+  with_items: "{{ killed_processes.results | select('failed') | map(attribute='item') | list }}"
+
 - name: Creates petclinic directory
   file:
     path: "{{ item }}"
     state: directory
   with_items:
-    - /home/devops/petclinic
-    - /home/devops/petclinic/logs
+    - "{{ DEPLOY_PATH }}"
+    - "{{ LOG_PATH }}"
 
 - name: Copy petclinic JAR to tomcat
   become: true
   copy:
     src: "{{ BUILD_PATH }}/target/spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar"
-    dest: /home/devops/petclinic
+    dest: "{{ DEPLOY_PATH }}"
 
 - name: start petclinic 
-  shell: cd /home/devops/petclinic; nohup sudo java -jar spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar  2>&1 &
+  shell: nohup sudo java -jar spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar --spring.profiles.active=mysql >> {{ LOG_PATH }}/petclinic.log 2>&1 &
+  args:
+    chdir: "{{ DEPLOY_PATH }}"

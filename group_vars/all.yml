@@ -1,6 +1,8 @@
 APP_NAME: petclinic
 GIT_REPO: https://github.com/madhusudhanan-ms/spring-petclinic.git
 BUILD_PATH: /tmp/spring-petclinic
+DEPLOY_PATH: /home/devops/petclinic
+LOG_PATH: /home/devops/petclinic/logs
 MYSQL_SERVER: 172.31.43.60 
 MYSQL_USER: root
 MYSQL_PASSWORD: root

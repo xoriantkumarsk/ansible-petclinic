@@ -3,3 +3,6 @@
   command: mvn -f pom.xml clean package
   args:
     chdir: "{{ BUILD_PATH }}"
+  register: build
+
+- debug: msg = "{{ build.stdout }}"
