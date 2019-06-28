@@ -3,7 +3,7 @@
   roles:
     - build
 
-- hosts: webserver
+- hosts: jenkins_app
   gather_facts: yes
   become: yes
   roles:
