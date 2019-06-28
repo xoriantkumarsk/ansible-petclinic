@@ -9,7 +9,6 @@
 - name: Copy petclinic JAR to tomcat
   become: true
   copy:
-    remote_src: true
     src: "{{ BUILD_PATH }}/target/spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar"
     dest: /var/petclinic/
 
