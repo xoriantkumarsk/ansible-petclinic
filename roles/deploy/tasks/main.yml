@@ -23,7 +23,7 @@
     state: directory
     owner: devops
     group: devops
-    mode: u=rw,g=r,o=r
+    mode: u=rwx,g=r,o=r
   with_items:
     - "{{ DEPLOY_PATH }}"
     - "{{ LOG_PATH }}"
