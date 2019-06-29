@@ -37,7 +37,12 @@
     mode: u=rw,g=r,o=r
 
 
-- name: start petclinic 
+- name: Start PetClinic 
   shell: nohup java -jar spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar --spring.profiles.active=mysql >> {{ LOG_PATH }}/petclinic.log 2>&1 &
   args:
     chdir: "{{ DEPLOY_PATH }}"
+  register: result
+
+- debug:
+    var: result
+    verbosity: 2
