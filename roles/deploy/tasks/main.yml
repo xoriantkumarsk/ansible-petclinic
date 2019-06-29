@@ -45,4 +45,4 @@
 
 - debug:
     var: result
-    verbosity: 2
+    verbosity: 4
