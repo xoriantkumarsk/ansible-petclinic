@@ -36,9 +36,6 @@
     group: devops
     mode: u=rw,g=r,o=r
 
-- name: Set BUILD_ID to dotnKillMe
-  shell: export BUILD_ID=dontKillMe
-
 - name: Start PetClinic 
   shell: nohup java -jar spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar --spring.profiles.active=mysql >> {{ LOG_PATH }}/petclinic.log 2>&1 &
   args:
