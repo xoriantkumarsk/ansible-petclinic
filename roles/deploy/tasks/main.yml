@@ -44,6 +44,12 @@
     force: yes
     mode: u=rwx,g=rx,o=rx
 
+- name: Start and enable petclinic services for automatic start
+  become: yes
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: petclinic
 
 # - name: Start PetClinic 
 #   shell: java -jar spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar --spring.profiles.active=mysql >> {{ LOG_PATH }}/petclinic.log &
