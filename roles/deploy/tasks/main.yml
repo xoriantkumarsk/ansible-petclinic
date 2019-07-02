@@ -44,7 +44,8 @@
     force: yes
     mode: u=rwx,g=rx,o=rx
 
-- name: Enable services for automatic start
+- name: Start and enable petclinic services for automatic start
+  become: yes
   service:
     name: petclinic
     enabled: yes
