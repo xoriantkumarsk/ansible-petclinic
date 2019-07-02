@@ -1,5 +1,5 @@
 APP_NAME: petclinic
 GIT_REPO: https://github.com/madhusudhanan-ms/spring-petclinic.git
 BUILD_PATH: /tmp/spring-petclinic
-DEPLOY_PATH: /home/devops/petclinic
-LOG_PATH: /home/devops/petclinic/logs
+DEPLOY_PATH: /home/devops/{{ APP_NAME }}
+LOG_PATH: "{{ DEPLOY_PATH }}/logs"

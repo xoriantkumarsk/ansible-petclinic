@@ -4,6 +4,5 @@
     src: "{{ item }}"
     dest: "{{ BUILD_PATH }}/src/main/resources/"
     force: yes
-    backup: yes
   with_items:
     - application-mysql.properties

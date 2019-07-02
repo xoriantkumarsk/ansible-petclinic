@@ -31,17 +31,30 @@
 - name: Copy petclinic JAR to tomcat
   copy:
     src: "{{ BUILD_PATH }}/target/spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar"
-    dest: "{{ DEPLOY_PATH }}"
+    dest: "{{ DEPLOY_PATH }}/{{ APP_NAME }}.jar"
     owner: devops
     group: devops
     mode: u=rw,g=r,o=r
 
-- name: Start PetClinic 
-  shell: java -jar spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar --spring.profiles.active=mysql >> {{ LOG_PATH }}/petclinic.log &
-  args:
-    chdir: "{{ DEPLOY_PATH }}"
-  register: start_result
+- name: Copy petclinic service script to /etc/init.d/ dir
+  become: yes
+  template:
+    src: petclinic
+    dest: "/etc/init.d/"
+    force: yes
+    mode: u=rwx,g=rx,o=rx
 
-- name: Start result output
-  debug:
-    var: start_result
+- name: Enable services for automatic start
+  service:
+    name: petclinic
+    enabled: yes
+
+# - name: Start PetClinic 
+#   shell: java -jar spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar --spring.profiles.active=mysql >> {{ LOG_PATH }}/petclinic.log &
+#   args:
+#     chdir: "{{ DEPLOY_PATH }}"
+#   register: start_result
+
+# - name: Start result output
+#   debug:
+#     var: start_result
