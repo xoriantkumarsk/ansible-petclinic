@@ -1,8 +1,10 @@
 - name: Get running processes
+  become: yes
   shell: "ps -ef | grep -v grep | grep -w {{ APP_NAME }} | awk '{print $2}'"
   register: running_processes
 
 - name: Kill running processes
+  become: yes
   shell: "kill {{ item }}"
   with_items: "{{ running_processes.stdout_lines }}"
 
@@ -11,9 +13,11 @@
     state: absent
   with_items: "{{ running_processes.stdout_lines }}"
   ignore_errors: yes
+  become: yes
   register: killed_processes
 
 - name: Force kill stuck processes
+  become: yes
   shell: "kill -9 {{ item }}"
   with_items: "{{ killed_processes.results | select('failed') | map(attribute='item') | list }}"
 
@@ -29,6 +33,7 @@
     - "{{ LOG_PATH }}"
 
 - name: Copy petclinic JAR to tomcat
+  become: yes
   copy:
     src: "{{ BUILD_PATH }}/target/spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar"
     dest: "{{ DEPLOY_PATH }}/{{ APP_NAME }}.jar"
@@ -50,13 +55,3 @@
     state: restarted
     daemon_reload: yes
     name: petclinic
-
-# - name: Start PetClinic 
-#   shell: java -jar spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar --spring.profiles.active=mysql >> {{ LOG_PATH }}/petclinic.log &
-#   args:
-#     chdir: "{{ DEPLOY_PATH }}"
-#   register: start_result
-
-# - name: Start result output
-#   debug:
-#     var: start_result
