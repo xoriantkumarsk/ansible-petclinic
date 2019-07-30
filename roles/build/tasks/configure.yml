@@ -4,5 +4,6 @@
     src: "{{ item }}"
     dest: "{{ BUILD_PATH }}/src/main/resources/"
     force: yes
+  when: IS_PRIMARY_DEPLOYMENT == 'true'
   with_items:
     - application-mysql.properties

@@ -55,3 +55,4 @@
     state: restarted
     daemon_reload: yes
     name: petclinic
+  when: IS_PRIMARY_DEPLOYMENT == 'true'
