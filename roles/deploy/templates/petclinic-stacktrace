@@ -3,7 +3,7 @@
 # chkconfig: - 99 10
 SERVICE_NAME={{ APP_NAME }}
 BASE_DIR={{ DEPLOY_PATH }}
-START_COMMAND="nohup java -javaagent:'/home/devops/petclinic/apm.jar' -Delastic.apm.service_name=petclinic -Delastic.apm.server_urls=http://{{ APM_SERVER }}:8200 -Delastic.apm.metrics_interval=0s -Delastic.apm.span_frames_min_duration=-1ms  -jar $BASE_DIR/$SERVICE_NAME.jar --spring.profiles.active=mysql"
+START_COMMAND="nohup java -javaagent:/home/devops/petclinic/apm.jar -Delastic.apm.service_name=petclinic -Delastic.apm.server_urls=http://{{ APM_SERVER }}:8200 -Delastic.apm.metrics_interval=0s -Delastic.apm.span_frames_min_duration=-1ms  -jar $BASE_DIR/$SERVICE_NAME.jar --spring.profiles.active=mysql"
 PID_FILE=$BASE_DIR/$SERVICE_NAME.pid
 LOG_DIR={{ LOG_PATH }}
  
