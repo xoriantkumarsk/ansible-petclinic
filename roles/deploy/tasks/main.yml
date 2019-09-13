@@ -41,13 +41,29 @@
     group: devops
     mode: u=rw,g=r,o=r
 
+- name: Download apm jar file
+  get_url:
+    url: https://search.maven.org/remotecontent?filepath=co/elastic/apm/elastic-apm-agent/1.6.1/elastic-apm-agent-1.6.1.jar
+    dest: /home/devops/petclinic/apm.jar
+    mode: '0777'
+
 - name: Copy petclinic service script to /etc/init.d/ dir
   become: yes
   template:
-    src: petclinic
-    dest: "/etc/init.d/"
+    src: petclinic-without-stacktrace
+    dest: "/etc/init.d/petclinic"
     force: yes
     mode: u=rwx,g=rx,o=rx
+  when: IS_STACKTRACE_ENABLE == 'false'
+
+- name: Copy petclinic service script to /etc/init.d/ dir
+  become: yes
+  template:
+    src: petclinic-stacktrace
+    dest: "/etc/init.d/petclinic"
+    force: yes
+    mode: u=rwx,g=rx,o=rx
+  when: IS_STACKTRACE_ENABLE == 'true
 
 - name: Start and enable petclinic services for automatic start
   become: yes
