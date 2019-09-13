@@ -7,3 +7,4 @@
   when: IS_PRIMARY_DEPLOYMENT == 'true'
   with_items:
     - application-mysql.properties
+    - application.properties
