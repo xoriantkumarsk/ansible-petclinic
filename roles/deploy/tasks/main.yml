@@ -50,7 +50,7 @@
 - name: Copy petclinic service script to /etc/init.d/ dir
   become: yes
   template:
-    src: petclinic-without-stacktrace
+    src: petclinic
     dest: "/etc/init.d/petclinic"
     force: yes
     mode: u=rwx,g=rx,o=rx
