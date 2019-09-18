@@ -41,6 +41,20 @@
     group: devops
     mode: u=rw,g=r,o=r
 
+- name: read file from server
+  shell: cat /etc/petclinic/petclinic.conf
+  register: data
+  when: IS_STACKTRACE_ENABLE == 'true'
+
+- name: Trigger shell commands
+  command: "{{ item }}"
+  become: yes
+  with_items:
+    - jar xf /home/devops/petclinic/petclinic.jar BOOT-INF/classes/application.properties
+    - sed -i "s/tag_Name=petclinic/tag_Name={{ data.stdout }}/g" BOOT-INF/classes/application.properties
+    - jar uf /home/devops/petclinic/petclinic.jar BOOT-INF/classes/application.properties
+  when: IS_STACKTRACE_ENABLE == 'true'
+
 - name: Download apm jar file
   get_url:
     url: https://search.maven.org/remotecontent?filepath=co/elastic/apm/elastic-apm-agent/1.6.1/elastic-apm-agent-1.6.1.jar
