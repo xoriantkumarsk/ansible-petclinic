@@ -61,7 +61,7 @@
     dest: /home/devops/petclinic/apm.jar
     mode: '0777'
 
-- name: Copy petclinic service script to /etc/init.d/ dir
+- name: Copy petclinic service script to /etc/init.d/ dir(centos or RHEL)
   become: yes
   template:
     src: petclinic
@@ -70,7 +70,7 @@
     mode: u=rwx,g=rx,o=rx
   when: IS_STACKTRACE_ENABLE == 'false' and OS_DESTRO_TYPE == 'centos' or OS_DESTRO_TYPE == 'ec2-user'
   
-- name: Copy petclinic service script to /etc/init.d/ dir
+- name: Copy petclinic service script to /etc/init.d/ dir (centos or RHEL)
   become: yes
   template:
     src: petclinic-stacktrace
