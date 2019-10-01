@@ -79,7 +79,7 @@
     mode: u=rwx,g=rx,o=rx
   when: IS_STACKTRACE_ENABLE == 'true' and OS_DESTRO_TYPE == 'centos' or OS_DESTRO_TYPE == 'ec2-user'
 
-- name: Copy petclinic service script to /etc/systemd/system/ dir
+- name: Copy petclinic service script to /etc/systemd/system/ dir (ubuntu)
   become: yes
   template:
     src: petclinic-stacktrace
@@ -88,7 +88,7 @@
     mode: u=rwx,g=rx,o=rx
   when: IS_STACKTRACE_ENABLE == 'true' and OS_DESTRO_TYPE == 'ubuntu'
   
-- name: Copy petclinic service script to  /etc/systemd/system/ dir
+- name: Copy petclinic service script to  /etc/systemd/system/ dir(ubuntu)
   become: yes
   template:
     src: petclinic
