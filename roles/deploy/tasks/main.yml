@@ -68,8 +68,8 @@
     dest: "/etc/init.d/petclinic"
     force: yes
     mode: u=rwx,g=rx,o=rx
-  when: IS_STACKTRACE_ENABLE == 'false'
-
+  when: IS_STACKTRACE_ENABLE == 'false' and OS_DESTRO_TYPE == 'centos' or OS_DESTRO_TYPE == 'ec2-user'
+  
 - name: Copy petclinic service script to /etc/init.d/ dir
   become: yes
   template:
@@ -77,7 +77,25 @@
     dest: "/etc/init.d/petclinic"
     force: yes
     mode: u=rwx,g=rx,o=rx
-  when: IS_STACKTRACE_ENABLE == 'true'
+  when: IS_STACKTRACE_ENABLE == 'true' and OS_DESTRO_TYPE == 'centos' or OS_DESTRO_TYPE == 'ec2-user'
+
+- name: Copy petclinic service script to /etc/init.d/ dir
+  become: yes
+  template:
+    src: petclinic-stacktrace
+    dest: "/etc/systemd/system/petclinic"
+    force: yes
+    mode: u=rwx,g=rx,o=rx
+  when: IS_STACKTRACE_ENABLE == 'true' and OS_DESTRO_TYPE == 'ubuntu'
+  
+- name: Copy petclinic service script to  /etc/systemd/system/ dir
+  become: yes
+  template:
+    src: petclinic
+    dest: "/etc/systemd/system/petclinic"
+    force: yes
+    mode: u=rwx,g=rx,o=rx
+  when: IS_STACKTRACE_ENABLE == 'false' and OS_DESTRO_TYPE == 'ubuntu'
 
 - name: Start and enable petclinic services for automatic start
   become: yes
