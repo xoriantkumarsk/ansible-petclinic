@@ -61,23 +61,41 @@
     dest: /home/devops/petclinic/apm.jar
     mode: '0777'
 
-- name: Copy petclinic service script to /etc/init.d/ dir
+- name: Copy petclinic service script to /etc/init.d/ dir(centos or RHEL)
   become: yes
   template:
     src: petclinic
     dest: "/etc/init.d/petclinic"
     force: yes
     mode: u=rwx,g=rx,o=rx
-  when: IS_STACKTRACE_ENABLE == 'false'
-
-- name: Copy petclinic service script to /etc/init.d/ dir
+  when: IS_STACKTRACE_ENABLE == 'false' and OS_DISTRO_TYPE == 'centos' or OS_DISTRO_TYPE == 'ec2-user'
+  
+- name: Copy petclinic service script to /etc/init.d/ dir (centos or RHEL)
   become: yes
   template:
     src: petclinic-stacktrace
     dest: "/etc/init.d/petclinic"
     force: yes
     mode: u=rwx,g=rx,o=rx
-  when: IS_STACKTRACE_ENABLE == 'true'
+  when: IS_STACKTRACE_ENABLE == 'true' and OS_DISTRO_TYPE == 'centos' or OS_DISTRO_TYPE == 'ec2-user'
+
+- name: Copy petclinic service script to /etc/systemd/system/ dir (ubuntu)
+  become: yes
+  template:
+    src: petclinic-stacktrace
+    dest: "/etc/systemd/system/petclinic"
+    force: yes
+    mode: u=rwx,g=rx,o=rx
+  when: IS_STACKTRACE_ENABLE == 'true' and OS_DISTRO_TYPE == 'ubuntu'
+  
+- name: Copy petclinic service script to  /etc/systemd/system/ dir(ubuntu)
+  become: yes
+  template:
+    src: petclinic
+    dest: "/etc/systemd/system/petclinic"
+    force: yes
+    mode: u=rwx,g=rx,o=rx
+  when: IS_STACKTRACE_ENABLE == 'false' and OS_DISTRO_TYPE == 'ubuntu'
 
 - name: Start and enable petclinic services for automatic start
   become: yes
